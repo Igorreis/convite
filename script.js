@@ -96,7 +96,7 @@ const posterContent = {
   ],
   extras: ["Comidinhas", "Vinho", "Musiquinhas"],
   signoff: "Feito com nossas próprias mões.",
-  viewButton: "Ver nosso convite",
+  viewButton: "Ver convite",
   changeButton: "Trocar atividade",
 };
 
