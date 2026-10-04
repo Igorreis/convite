@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#eee5d8">
+    <meta name="description" content="Um pequeno convite para um momento a dois.">
+    <title>Um convite para nós</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="invitation">
+      <p class="page-note">feito com carinho para você</p>
+      <section class="paper-card" aria-labelledby="invitation-title">
+        <span class="tape" aria-hidden="true"></span>
+        <p class="eyebrow" id="invitation-eyebrow">UM PLANO A DOIS</p>
+        <img class="illustration" src="assets/envelope.svg" alt="" width="240" height="160">
+        <div class="message" id="invitation-message" aria-live="polite" aria-atomic="true">
+          <h1 id="invitation-title">Você está convidada para um <em>date surpresa.</em></h1>
+          <p class="reveal-description" id="invitation-description" hidden></p>
+          <p class="question" id="invitation-question">Aceita?</p>
+        </div>
+        <div class="button-area">
+          <button class="decline-button" id="decline-button" type="button">Não</button>
+          <button class="accept-button" id="accept-button" type="button" hidden>Sim ❤️</button>
+          <button class="decline-button" id="reject-button" type="button" hidden>Não</button>
+        </div>
+        <fieldset class="activity-choice" id="activity-choice" hidden>
+          <legend id="activity-prompt"></legend>
+          <div class="activity-grid" id="activity-options"></div>
+          <p class="selection-feedback" id="selection-feedback" role="status" aria-atomic="true"></p>
+          <button class="accept-button view-invitation" id="view-invitation" type="button" disabled>Ver nosso convite</button>
+        </fieldset>
+        <p class="card-note" id="invitation-note">Um convite misterioso.</p>
+      </section>
+      <section class="poster" id="final-invitation" aria-labelledby="poster-title" hidden>
+        <p class="poster-eyebrow" id="poster-eyebrow"></p>
+        <h1 class="poster-title" id="poster-title" tabindex="-1"></h1>
+        <p class="poster-subtitle" id="poster-subtitle"></p>
+        <div class="poster-art">
+          <img id="poster-image" alt="" width="240" height="160">
+          <p class="poster-activity" id="poster-activity"></p>
+        </div>
+        <p class="poster-description" id="poster-description"></p>
+        <dl class="poster-details" id="poster-details"></dl>
+        <ul class="poster-extras" id="poster-extras"></ul>
+        <p class="poster-signoff" id="poster-signoff"></p>
+        <button class="decline-button" id="change-activity" type="button">Trocar atividade</button>
+      </section>
+    </main>
+  </body>
+</html>
