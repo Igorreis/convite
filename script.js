@@ -44,7 +44,7 @@ const revealContent = {
 };
 
 const declinedContent = {
-  eyebrow: "SEM PRESSA",
+  eyebrow: "Ok",
   title: "Tudo ",
   highlight: "bem…",
   description: "",
