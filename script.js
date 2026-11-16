@@ -1,43 +1,9 @@
-// Textos comuns a todas as etapas.
-const invitationContent = {
-  eyebrow: "UM PLANO A DOIS",
-  note: "Um convite misterioso.",
-};
-
-// Adicione, remova ou reordene objetos para mudar a sequência.
-const refusalSteps = [
-  {
-    title: "Você está convidada para um ",
-    highlight: "date surpresa.",
-    question: "Aceita?",
-    button: "Não",
-  },
-  {
-    title: "Você tem ",
-    highlight: "certeza?",
-    question: "Não quer mesmo?",
-    button: "Não mesmo?",
-  },
-  {
-    title: "Pensa ",
-    highlight: "bem…",
-    question: "Ouvi dizer que vai ser bem legal.",
-    button: "Ainda não?",
-  },
-  {
-    title: "Tá ",
-    highlight: "bom…",
-    question: "Talvez esteja faltando uma informação importante.",
-    button: "O que?",
-  },
-];
-
 const revealContent = {
   eyebrow: "CHÁ DE REVELAÇÃO DO DATE",
-  title: "Vai ser um ",
-  highlight: "date artístico.",
+  title: "Date ",
+  highlight: "EAD 2.0",
   description: "Com comidinhas, musiquinhas e vinho 🍷🎨",
-  question: "Agora você aceita?",
+  question: "Aceita?",
   button: "Sim ❤️",
   declineButton: "Não",
   note: "Um datezinho gostoso",
@@ -56,29 +22,43 @@ const acceptedContent = {
   eyebrow: "TEMOS UM DATE",
   title: "Então está ",
   highlight: "combinado.",
-  description: "Cacarecos e bebidinhas",
-  question: "Vamos fazer coisas com nossas próprias mões.",
+  description: "",
+  question: "",
   note: "Tô animadoooo!",
 };
 
 const activityContent = {
-  prompt: "Qual vai ser a nossa arte?",
+  prompt: "Qual a atividade do dia?",
   hint: "Escolha a sua favorita (pode mudar de ideia depois).",
   selectedLabel: "Escolhida ✓",
   options: [
     {
-      id: "pintura",
-      title: "Pintura",
-      description: "Pintuas feias, vamos lá!",
-      image: "assets/atelie.svg",
-      confirmation: "Pintura escolhida!",
+      id: "papear",
+      title: "Papear",
+      description: "Y vamos hablar",
+      image: "assets/papear.svg",
+      confirmation: "Papear escolhido!",
     },
     {
-      id: "colagem",
-      title: "Colagem",
-      description: "Vamos fazer colagens com matériais questionáveis.",
-      image: "assets/colagem.svg",
-      confirmation: "Colagem escolhida!",
+      id: "artesanatos",
+      title: "Artesanatos",
+      description: "Inventar coisas com nossas próprias mões.",
+      image: "assets/atelie.svg",
+      confirmation: "Artesanatos escolhidos!",
+    },
+    {
+      id: "filminho",
+      title: "Filminho",
+      description: "tao longe não da nem pra passar a mao pro encosto da cadeira",
+      image: "assets/filminho.svg",
+      confirmation: "Filminho escolhido!",
+    },
+    {
+      id: "joguinho",
+      title: "Joguinho",
+      description: "Uma partidinha a dois.",
+      image: "assets/joguinho.svg",
+      confirmation: "Joguinho escolhido!",
     },
   ],
 };
@@ -90,17 +70,15 @@ const posterContent = {
   subtitle: "Artesanatos feios tem seu valor",
   description: "Sou bobo né",
   details: [
-    { label: "Data", value: "Semana que vem? (Quando puder, seu outubro tá muito cheio)" },
+    { label: "Data", value: "Quando seus compromissos e fuso horário deixarem" },
     { label: "Horário", value: "Num sei" },
-    { label: "Local", value: "Minha casinha?" },
+    { label: "Local", value: "EAD :(" },
   ],
   extras: ["Comidinhas", "Vinho", "Musiquinhas"],
-  signoff: "Feito com nossas próprias mões.",
   viewButton: "Ver convite",
   changeButton: "Trocar atividade",
 };
 
-const declineButton = document.getElementById("decline-button");
 const acceptButton = document.getElementById("accept-button");
 const rejectButton = document.getElementById("reject-button");
 const card = document.querySelector(".paper-card");
@@ -109,11 +87,9 @@ const viewInvitationButton = document.getElementById("view-invitation");
 const message = document.getElementById("invitation-message");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const buttonArea = document.querySelector(".button-area");
-const buttonPositions = ["right", "left", "right-low", "left-low"];
-let currentStep = 0;
 let messageAnimation;
 let cardAnimation;
-let stage = "refusal";
+let stage = "reveal";
 let selectedActivity = null;
 
 function showFinalInvitation() {
@@ -125,7 +101,6 @@ function showFinalInvitation() {
     "poster-title": posterContent.title,
     "poster-subtitle": posterContent.subtitle,
     "poster-description": posterContent.description,
-    "poster-signoff": posterContent.signoff,
     "poster-activity": activity.title,
     "change-activity": posterContent.changeButton,
   };
@@ -217,19 +192,6 @@ function renderActivityChoices() {
   }
 }
 
-function positionDeclineButton() {
-  const shouldFloat = stage === "refusal" && currentStep > 0 && !reducedMotion.matches;
-  if (shouldFloat && !declineButton.classList.contains("decline-button--floating")) {
-    // Reserva a altura antes de tirar o botão do fluxo do cartão.
-    buttonArea.style.minHeight = `${buttonArea.getBoundingClientRect().height}px`;
-  }
-
-  declineButton.classList.toggle("decline-button--floating", shouldFloat);
-  declineButton.dataset.position = shouldFloat
-    ? buttonPositions[(currentStep - 1) % buttonPositions.length]
-    : "";
-}
-
 function renderMessage(content) {
   const title = document.getElementById("invitation-title");
   const highlight = document.createElement("em");
@@ -240,25 +202,6 @@ function renderMessage(content) {
   const description = document.getElementById("invitation-description");
   description.textContent = content.description ?? "";
   description.hidden = !content.description;
-}
-
-function renderStep() {
-  const content = refusalSteps[currentStep];
-  renderMessage(content);
-  declineButton.textContent = content.button ?? "Não";
-
-  positionDeclineButton();
-}
-
-function advanceRefusal() {
-  if (stage !== "refusal") return;
-  if (currentStep < refusalSteps.length - 1) {
-    currentStep += 1;
-    renderStep();
-  } else {
-    showReveal();
-  }
-  animateMessage();
 }
 
 function animateMessage() {
@@ -277,15 +220,11 @@ function showReveal() {
   renderMessage(revealContent);
   document.getElementById("invitation-eyebrow").textContent = revealContent.eyebrow;
   document.getElementById("invitation-note").textContent = revealContent.note;
-  positionDeclineButton();
-  declineButton.hidden = true;
   acceptButton.textContent = revealContent.button;
   acceptButton.hidden = false;
   rejectButton.textContent = revealContent.declineButton;
   rejectButton.hidden = false;
   buttonArea.classList.add("button-area--reveal");
-  buttonArea.style.minHeight = "";
-  acceptButton.focus({ preventScroll: true });
 }
 
 function declineInvitation() {
@@ -325,19 +264,15 @@ function acceptInvitation() {
   }
 }
 
-document.getElementById("invitation-eyebrow").textContent = invitationContent.eyebrow;
-document.getElementById("invitation-note").textContent = invitationContent.note;
-declineButton.addEventListener("click", advanceRefusal);
 acceptButton.addEventListener("click", acceptInvitation);
 rejectButton.addEventListener("click", declineInvitation);
 viewInvitationButton.textContent = posterContent.viewButton;
 viewInvitationButton.addEventListener("click", showFinalInvitation);
 document.getElementById("change-activity").addEventListener("click", changeActivity);
 reducedMotion.addEventListener("change", () => {
-  positionDeclineButton();
   if (reducedMotion.matches) {
     messageAnimation?.cancel();
     cardAnimation?.cancel();
   }
 });
-renderStep();
+showReveal();

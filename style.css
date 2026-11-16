@@ -156,28 +156,6 @@ h1 em { color: var(--wine); }
 }
 #invitation-title:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 6px; }
 
-.decline-button--floating {
-  --edge-offset: min(36px, 8vw);
-  position: absolute;
-  top: 12px;
-  z-index: 10;
-  background: var(--paper);
-  box-shadow: 0 5px 18px #624c3220;
-  max-width: calc(100vw - 48px);
-}
-
-.decline-button--floating[data-position$="low"] {
-  top: 32px;
-}
-
-.decline-button--floating[data-position^="right"] {
-  right: calc(-1 * var(--edge-offset));
-}
-
-.decline-button--floating[data-position^="left"] {
-  left: calc(-1 * var(--edge-offset));
-}
-
 .card-note {
   margin: 0;
   padding-top: 18px;
@@ -223,7 +201,6 @@ h1 em { color: var(--wine); }
 .poster-details dd { margin: 0; font-size: 17px; line-height: 1.5; }
 .poster-extras { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; padding: 0; margin: 24px 0; list-style: none; color: var(--wine); font-size: 16px; }
 .poster-extras li::before { content: "✳ "; color: var(--terracotta); }
-.poster-signoff { margin: 0 0 24px; font-size: 18px; font-style: italic; }
 
 @media (min-width: 600px) {
   .poster { padding: 40px 44px; }
@@ -231,7 +208,6 @@ h1 em { color: var(--wine); }
 }
 
 @media (min-width: 600px) {
-  .decline-button--floating { --edge-offset: 60px; }
   .invitation { padding: 44px 24px; }
   .paper-card { padding: 40px 44px 30px; }
   .illustration { width: 230px; margin-top: 22px; margin-bottom: 20px; }
